@@ -1,0 +1,201 @@
+
+PART A: Multiple Choice Questions
+
+Q1.  In a RAG system, "hybrid search" refers to:
+
+A)  Running two separate LLMs and merging their outputs
+B)  Combining dense vector similarity search with sparse keyword-based retrieval (e.g., BM25) to improve recall
+C)  Using two embedding models - one for queries and one for documents
+D)  Retrieving from two different vector databases simultaneously
+
+Answer - B
+
+
+Q2.  When a RAG pipeline returns relevant chunks but the model still produces hallucinated answers, the most likely root cause is:
+
+A)  The embedding model's dimensionality is too low
+B)  The language model is not sufficiently constrained to ground its generation in the provided context
+C)  The chunking overlap is too large
+D)  The vector store's ANN index is misconfigured
+
+Answer - B
+
+
+Q3.  In an agentic LLM system, "tool calling" (function calling) primarily allows the model to:
+
+A)  Update its own weights using the results of tool execution
+B)  Deterministically invoke structured external functions with typed arguments, extending beyond its training knowledge
+C)  Replace the retrieval step in a RAG pipeline
+D)  Parallelize multiple forward passes across different GPUs
+
+Answer - B
+
+
+Q4.  Which of the following best describes the role of the [CLS] token in BERT?
+
+A)  It marks the boundary between two sentences in NSP and has no learned representation
+B)  Its final hidden state is used as an aggregate sequence-level representation for classification tasks
+C)  It stores the positional encoding for the entire sequence
+D)  It is always masked during MLM pre-training to force the model to rely on other tokens
+
+Answer - A
+
+Q5.  Compared to BERT-base, RoBERTa improves performance primarily by:
+
+A)  Adding a decoder stack and using a seq2seq objective
+B)  Training longer on more data, removing the NSP objective, using dynamic masking, and training with larger batches
+C)  Introducing cross-attention between token pairs separated by more than 128 positions
+D)  Replacing WordPiece tokenization with character-level encoding
+
+Answer - D
+
+Q6.  In a decoder-only transformer, increasing context length while keeping model size fixed primarily increases:
+
+A)  The number of trainable parameters in the feed-forward layers
+B)  The memory required for the KV-cache linearly with sequence length
+C)  The embedding dimension of each token
+D)  The number of attention heads in each layer
+
+Answer - B
+
+Q7.  T5 treats all NLP tasks as text-to-text problems. The benefit of this formulation is:
+
+A)  It allows the model to use a different tokenizer for each task
+B)  A single unified model and objective can be applied to classification, summarization, translation, and QA without task-specific heads
+C)  It removes the need for an encoder entirely, making inference faster
+D)  It ensures the model never produces tokens outside the target vocabulary
+
+Answer - A
+
+Q8.  Gradient accumulation is used during training when:
+
+A)  The learning rate needs to be warmed up over the first few steps
+B)  The desired effective batch size is larger than what fits in GPU memory, so gradients are accumulated over multiple smaller mini-batch passes before an optimizer step
+C)  The model's loss plateaus and gradients need to be smoothed
+D)  Validation loss needs to be computed without storing activations
+
+Answer - C
+
+Q9.  In transformer inference, "prefill" and "decode" phases differ in that:
+
+A)  Prefill generates output tokens one at a time; decode processes the full prompt in parallel
+B)  Prefill processes the full input prompt in a single parallel forward pass to populate the KV-cache; decode generates output tokens one at a time autoregressively
+C)  Prefill runs on CPU; decode runs on GPU
+D)  Prefill uses FP32; decode uses FP16 to save memory
+
+Answer - A
+
+Q10.  Tensor parallelism (Megatron-LM style) in large model training splits:
+
+A)  The dataset across GPUs so each GPU trains on a different subset
+B)  Individual weight matrices across GPUs along a dimension so each GPU holds a column/row shard, and all-reduce synchronises results
+C)  The model depth so each GPU handles a subset of layers sequentially
+D)  The batch dimension so each GPU processes a different sample with the full model
+
+Answer - B
+
+Q11.  Prefix tuning differs from full fine-tuning in that:
+
+A)  It trains additional adapter layers inserted between every transformer block
+B)  It prepends a set of trainable continuous "prefix" vectors to the key and value sequences of each attention layer, keeping all original model weights frozen
+C)  It trains only the final classification head while freezing all transformer layers
+D)  It uses a separate smaller model to generate the prefix tokens at inference time
+
+Answer - B
+
+
+Q12.  In instruction fine-tuning (IFT), the primary goal is to:
+
+A)  Compress the model to a smaller size using knowledge distillation
+B)  Train the model to follow natural language instructions across diverse tasks, improving zero-shot and few-shot instruction-following behaviour
+C)  Adapt the model to a specific domain corpus using continued pre-training on raw text
+D)  Align the model's tokenizer vocabulary with task-specific terminology
+
+Answer - C
+
+Q13.  Activation quantization is harder than weight quantization primarily because:
+
+A)  Activations are always negative, making unsigned integer formats inapplicable
+B)  Activation values vary significantly across inputs and contain outliers that are difficult to clip without large accuracy loss
+C)  Activations cannot be quantized below FP16 without retraining
+D)  Weight quantization is lossless, while activation quantization is inherently lossy
+
+Answer - D
+
+
+Q14.  AWQ (Activation-aware Weight Quantization) improves over naive INT4 weight quantization by:
+
+A)  Quantizing all activations to INT4 in addition to weights
+B)  Identifying salient weight channels (those multiplied by large activation values) and preserving their precision, while aggressively quantizing less-important channels
+C)  Using the Hessian matrix to determine the optimal quantization grid for all weights uniformly
+D)  Running a short fine-tuning pass after quantization to restore accuracy
+
+Answer - B
+
+Q15.  The TER (Translation Edit Rate) metric measures translation quality by:
+
+A)  Computing character-level F1 between hypothesis and reference
+B)  Counting the minimum number of edits (insertions, deletions, substitutions, shifts) needed to transform the hypothesis into the reference, normalized by reference length - lower is better
+C)  Measuring cosine similarity between hypothesis and reference sentence embeddings
+D)  Computing the ratio of hypothesis length to reference length
+
+Answer - A
+
+Q16.  METEOR improves over BLEU by additionally accounting for:
+
+A)  Character-level n-gram overlap and edit distance
+B)  Stemming, synonym matching via WordNet, and recall in addition to precision, using a harmonic mean F-score with a fragmentation penalty
+C)  Semantic embeddings from a pretrained encoder to compute contextual similarity
+D)  The fluency of the hypothesis by measuring its perplexity under an LM
+
+Answer - D
+
+Q17.  When evaluating a neural machine translation model on a low-resource language pair with very few references, which strategy is most appropriate?
+
+A)  Use BLEU with a single reference translation
+B)  Use multiple diverse human references or switch to a reference-free metric such as COMET-QE (quality estimation without references)
+C)  Evaluate only on in-domain test sets and ignore BLEU entirely
+D)  Use word error rate (WER) as the primary metric since it is reference-free
+
+Answer - C
+
+
+Q18.  Grouped Query Attention (GQA) is a technique introduced to:
+
+A)  Increase the number of attention heads to improve model expressiveness
+B)  Reduce KV-cache memory by sharing key-value heads across multiple query heads, striking a balance between Multi-Head Attention and Multi-Query Attention
+C)  Replace positional encoding in attention with learned relative biases per group of heads
+D)  Enforce sparsity in the attention pattern by grouping tokens into fixed-size blocks
+
+Answer - C
+
+Q19.  Continuous batching (iteration-level scheduling) in LLM inference servers improves GPU utilisation by:
+
+A)  Increasing batch size until GPU memory is fully exhausted before starting generation
+B)  Dynamically inserting new requests into an ongoing batch at each decode step rather than waiting for all sequences to finish before accepting new ones
+C)  Pre-computing all possible next tokens and caching them to avoid redundant forward passes
+D)  Sorting incoming requests by prompt length to minimise padding waste
+
+Answer - B
+
+Q20.  In multi-hop RAG, the key distinction from single-step RAG is:
+
+A)  The embedding model is called multiple times on the same document
+B)  The system iteratively reformulates the query using intermediate retrieved information to answer questions that require synthesising evidence from multiple separate documents
+C)  Multiple vector databases are queried simultaneously and results are merged by a ranker
+D)  The LLM generates multiple answer candidates and picks the one with highest BLEU against retrieved context
+
+Answer - C
+ 
+
+echo "# AI_Logic_Interview" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/Malyala-Rajkumar/AI_Logic_Interview.git
+git push -u origin main
+
+git remote add origin https://github.com/Malyala-Rajkumar/AI_Logic_Interview.git
+git branch -M main
+git push -u origin main
