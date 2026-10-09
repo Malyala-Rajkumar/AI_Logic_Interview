@@ -187,15 +187,3 @@ D)  The LLM generates multiple answer candidates and picks the one with highest 
 
 Answer - C
  
-
-echo "# AI_Logic_Interview" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/Malyala-Rajkumar/AI_Logic_Interview.git
-git push -u origin main
-
-git remote add origin https://github.com/Malyala-Rajkumar/AI_Logic_Interview.git
-git branch -M main
-git push -u origin main
